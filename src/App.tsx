@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { CKEditor } from "ckeditor4-react";
+import placeHolder from "./placeholder_select/plugin";
 
-function App() {
+const App = () => {
+  const [value, setValue] = useState("");
+
+  const submitBtn = () => {
+    console.log(value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Using CKEditor 5 build in React</h2>
+      <CKEditor
+        value={value}
+        data="<p>Hello from CKEditor 5!</p>"
+        onReady={(editor: any) => {
+          // You can store the "editor" and use when it is needed.
+        }}
+        onChange={(e: any) => {
+          const data = e.editor.getData();
+          setValue(data);
+        }}
+        onBeforeLoad={(editor: any) => {
+          editor.plugins.add("placeholder", placeHolder(editor));
+          editor.config = {
+            ...editor.config,
+            placeholders: ["FirstName", "LastName"],
+            format: "##%placeholder%##",
+          };
+          console.log(editor.config);
+          editor.config.extraPlugins = "placeholder";
+        }}
+        config={{
+          toolbar: [
+            ["placeholder"],
+            ["Bold", "Italic", "Underline", "Link", "Unlink", "Image"],
+            [
+              "NumberedList",
+              "BulletedList",
+              "list",
+              "indent",
+              "blocks",
+              "Paragraph",
+            ],
+          ],
+        }}
+      />
+      <button onClick={submitBtn}>Click</button>
     </div>
   );
-}
-
+};
 export default App;
