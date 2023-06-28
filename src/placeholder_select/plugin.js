@@ -16,6 +16,7 @@ const placeHolder = (parentEditor) => {
                 );
                 placeholders.push([placeholder]);
               }
+              
 
               // add the menu to the editor
               editor.ui.addRichCombo("placeholder", {
@@ -30,9 +31,10 @@ const placeHolder = (parentEditor) => {
                 },
 
                 init: function () {
-                  //this.startGroup(`<input type="text" class="dropdown-search" id="dropdownSearch"/>`);
+                  //this.startGroup('<div onmouseover="parent.comboSearch(this);" onclick="parent.nemsComboSearch(this);"><input class="cke_search" placeholder="Search"/></div>');
+                  this.add('search', '<div onmouseover="parent.comboSearch(this);" class="cke_search_wrapper"><input class="cke_search" placeholder="Search"/></div>', '');
                   for (var i in placeholders) {
-                    this.add(placeholders[i] + i, placeholders[i]);
+                    this.add(placeholders[i] + i, placeholders[i]); //(value, title)
                   }
                 },
 
@@ -57,7 +59,7 @@ const generatePlaceholder = (editor, editor1, text) => {
 
     // Adds placeholder identifier as innertext.
     innerElement.add(new editor.htmlParser.text(text));
-    
+
     widgetWrapper = editor1.widgets.wrapElement(innerElement, "placeholder");
 
     // Return outerhtml of widget wrapper so it will be placed

@@ -37,6 +37,6 @@
   }
 }
 
-.dropdown-search{
-  
+.cke_panel_listItem {
+  background-color: lightgreen !important;
 }

@@ -10,6 +10,7 @@
       content="Web site created using create-react-app"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="stylesheet" href="/src/App.css" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -31,23 +32,42 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      function search() {
-        console.log("called");
-      }
-      //$(document).ready(checkContainer);
-
-      function checkContainer() {
-        console.log($("#dropdownSearch"));
-        var input = document.getElementById("dropdownSearch");
-        if (input) {
-          clearTimeout(checkContainer);
-          input.addEventListener("keyup", () => {
-            console.log("called");
+      window.comboSearch = function (element) {
+        var anchorID = $(element).closest("a").attr("id");
+        var liDom = $(element).closest("li");
+        liDom[0].nextElementSibling.style.paddingTop = "40px";
+        liDom
+          .empty()
+          .append(
+            `<div id="${anchorID}" style="padding: 7px !important; border-bottom: 1px solid lightgray; position: fixed; background-color: white;"><input style="width: 93%; padding: 3px;" class="cke_search" placeholder="Search" /></div>`
+          );
+        liDom
+          .find("input")
+          .off("keyup")
+          .on("keyup", function () {
+            var data = this.value;
+            //create a jquery object of the rows
+            var li = liDom.siblings("li");
+            data = data.toUpperCase();
+            var flag = true;
+            for (var i = 0; i < li.length; i++) {
+              if (li[i].textContent.toUpperCase().includes(data)) {
+                li[i].style.paddingTop = "0px";
+                if (flag) {
+                  flag = false;
+                  li[i].style.paddingTop = "40px";
+                }
+                li[i].hidden = false;
+              } else {
+                li[i].hidden = true;
+              }
+            }
+          })
+          .focus(function () {
+            this.value = "";
+            $(this).unbind("focus");
           });
-        } else {
-          setTimeout(checkContainer, 50);
-        }
-      }
+      };
     </script>
   </head>
   <body>

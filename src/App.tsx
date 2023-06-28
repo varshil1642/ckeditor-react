@@ -5,6 +5,56 @@ import placeHolder from "./placeholder_select/plugin";
 const App = () => {
   const [value, setValue] = useState("");
 
+  const placeholdersArray = [
+    "Afghanistan",
+    "Albania",
+    "Algeria",
+    "Andorra",
+    "Angola",
+    "Anguilla",
+    "Antigua &amp; Barbuda",
+    "Argentina",
+    "Armenia",
+    "Aruba",
+    "Australia",
+    "Austria",
+    "Azerbaijan",
+    "Bahamas",
+    "Bahrain",
+    "Bangladesh",
+    "Barbados",
+    "Belarus",
+    "Belgium",
+    "Belize",
+    "Benin",
+    "Bermuda",
+    "Bhutan",
+    "Bolivia",
+    "Bosnia &amp; Herzegovina",
+    "Botswana",
+    "Brazil",
+    "British Virgin Islands",
+    "Brunei",
+    "Bulgaria",
+    "Burkina Faso",
+    "Burundi",
+    "Cambodia",
+    "Cameroon",
+    "Cape Verde",
+    "Cayman Islands",
+    "Chad",
+    "Chile",
+    "China",
+    "Colombia",
+    "Congo",
+    "Cook Islands",
+    "Costa Rica",
+    "Cote D Ivoire",
+    "Croatia",
+    "Cruise Ship",
+    "Cuba",
+    "Cyprus",
+  ];
   const submitBtn = () => {
     console.log(value);
   };
@@ -26,10 +76,9 @@ const App = () => {
           editor.plugins.add("placeholder", placeHolder(editor));
           editor.config = {
             ...editor.config,
-            placeholders: ["FirstName", "LastName"],
-            format: "##%placeholder%##",
+            placeholders: placeholdersArray,
+            format: "%placeholder%",
           };
-          console.log(editor.config);
           editor.config.extraPlugins = "placeholder";
         }}
         config={{
